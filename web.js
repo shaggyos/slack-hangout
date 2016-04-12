@@ -32,7 +32,8 @@ app.get('/oauth2callback', function(req, res) {
   oauth2Client.getToken(req.query["code"], function(err, token) {
     if (err) {
       console.log("Error: " + err);
-      res.send(500, "Error getting token.");
+      //res.send(500, "Error getting token.");
+	  res.status(500).send("Error getting token.");
       return;
     }
 
@@ -47,7 +48,8 @@ app.get('/oauth2callback', function(req, res) {
       oauth2Client.refreshAccessToken(function(err, tokens) {
         if (!err) {
           console.log('Error: ', err);
-          res.send(500, err);
+          // res.send(500, err);
+		  res.status(500).send(err);
         } else {
           console.log('Refreshed tokens: ', tokens);
           res.send(tokens);
@@ -98,17 +100,20 @@ app.get('/', function(req, res) {
           }, function(err, response) {
             if (err != null) {
               console.log('Error while posting to Slack: ' + err);
-              res.send(500, err);
+              //res.send(500, err);
+			  res.status(500).send(err);
             } else {
               res.send();
             }
           });
         } else {
-          res.send(500, err);
+          // res.send(500, err);
+		  res.status(500).send(err);
         }
       });
   } else {
     res.send(400, 'Invalid parameters');
+	res.status(400).send('Invalid parameters');
   }
 });
 
