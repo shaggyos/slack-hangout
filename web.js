@@ -14,20 +14,20 @@ var oauth2Client = oauth2Client = new OAuth2(
 );
 
 var googleToken = process.env.GOOGLE_TOKEN;
-
 var slack = new Slack(process.env.SLACK_API_TOKEN);
 
 app.use(logfmt.requestLogger());
 
+// Authentication request folder
 app.get('/auth', function(req, res){
   var url = oauth2Client.generateAuthUrl({
     access_type: 'offline',
     scope: 'https://www.googleapis.com/auth/calendar'
   });
-
   res.redirect(url);
 });
 
+// Authentication response from Google authentication API
 app.get('/oauth2callback', function(req, res) {
   oauth2Client.getToken(req.query["code"], function(err, token) {
     if (err) {
@@ -61,6 +61,7 @@ app.get('/oauth2callback', function(req, res) {
   });
 });
 
+// Slack command interface.  Responds to /hangout only with a defined username.
 app.get('/', function(req, res) {
   if ((req.query.command == '/hangout') && (typeof(req.query.user_name) != 'undefined')) {
     oauth2Client.credentials = {

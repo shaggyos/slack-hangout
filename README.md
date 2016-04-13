@@ -8,7 +8,8 @@ Just type `/hangout` in any channel or direct message to create unique Hangout l
 ## Installation
 
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/suda/slack-hangout)
-
+** Enter the app name in the "New App Name".  Leave "Runtime Selection" as "United States", and click on "[Deploy for Free]"
+* Select "Manage App", 
 ## Configuration
 
 **Warning: for the following steps you can't use Google Apps account.
@@ -16,13 +17,18 @@ Just log in with @gmail.com account.**
 
 * Go to [Google Developers Console](https://console.developers.google.com)
 * Create Project
-* In **APIs & auth** select **APIs** and set **Calendar API** to **ON**
-* In **APIs & auth** select **Credentials** and click **Create new Client ID**
+* In **API Manager** select **Overview**, select **Google Calendar API**.  Click **Enable** button
+* In **API Manager** select **Credentials** and click **Create Credentials**
+  * **OAuth client ID**
+  * Click on "Consent Screen", set Production Name and any other items required.  Save
   * Set **Application Type** to **Web application**
-  * Set **Authorized JavaScript Origins** to your Heroku app URL
+  * Set Name to application name
+  * Set **Authorized JavaScript Origins** to your Heroku app URL (without any /auth etc)
   * Set **Authorized Redirect URI** to your Heroku app URL with `/oauth2callback` suffix (i.e. `http://peaceful-journey-9207.herokuapp.com/oauth2callback`)
   * Click **Create Client ID**
-* In Heroku go to your app settings and **Config Variables** section
+  * Note **Client ID** and **Client Secret**
+  
+* In Heroku go to your app, select **Settings**, click on **Reveal Config Vars** button
   * Click **Reveal Config Vars**
   * Add **CLIENT_ID** variable with **CLIENT ID** value from Google Developers Console
   * Add **CLIENT_SECRET** variable with **CLIENT SECRET** value from Google Developers Console
